@@ -5,14 +5,18 @@ import { createBottomTabNavigator } from 'react-navigation-tabs'
 import Index from '../tabs/index'
 import User from '../tabs/user'
 import Circle from '../tabs/circle'
+import HighComponent from '../tabs/HighComponent';
 
 const TabNavigator = createBottomTabNavigator(
     {
         Index: {
             screen: Index,
         },
-        Circle:{
+        Circle:{ 
             screen: Circle
+        },
+        HighComponent: {
+            screen: HighComponent,
         },
         User: {
             screen: User,
@@ -23,7 +27,7 @@ const TabNavigator = createBottomTabNavigator(
             //当前选中的tab bar的文本颜色和图标颜色
             activeTintColor: '#ff0001',
             //当前未选中的tab bar的文本颜色和图标颜色
-            inactiveTintColor: '#789456',
+            inactiveTintColor: '#089456',
             //是否显示tab bar的图标，默认是false
             showIcon: true,
             //showLabel - 是否显示tab bar的文本，默认是true
@@ -45,7 +49,7 @@ const TabNavigator = createBottomTabNavigator(
             },
             //tab bar的文本样式
             labelStyle: {
-                fontSize: 11,
+                fontSize: 10,
                 margin: 1
             },
             //tab 页指示符的样式 (tab页下面的一条线).
@@ -54,7 +58,7 @@ const TabNavigator = createBottomTabNavigator(
         //tab bar的位置, 可选值： 'top' or 'bottom'
         tabBarPosition: 'bottom',
         //是否允许滑动切换tab页
-        swipeEnabled: false,
+        swipeEnabled: true,
         //是否在切换tab页时使用动画
         animationEnabled: true,
         //是否懒加载
