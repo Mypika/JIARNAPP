@@ -7,17 +7,15 @@ import{
     ScrollView,
     StatusBar,
     StyleSheet,
+    TouchableHighlight,
     Dimensions
 }from 'react-native'
+
+import Header from '../../src/component/header/header'
+
 import AntDesign from'react-native-vector-icons/AntDesign'
-const moules = [{msg:'容器组件',id:1},
-                {msg:'基础组件',id:2},
-                {msg:'表单组件',id:3},
-                {msg:'交互控件',id:4},
-                {msg:'列表视图',id:5},
-                {msg:'ios组件',id:6},
-                {msg:'Android组件',id:7}
-              ]
+
+import {MoulesList} from '../json/Moule';
 class Index extends React.Component {
     static navigationOptions = {
         tabBarLabel: '内置组件',
@@ -33,34 +31,60 @@ class Index extends React.Component {
         },
     };
     state={
-      language:[1,2,3,4]
+      language:[1,2,3,4],
+      downID:-1
+    }
+    cutDown=(data)=>{
+      let id = data.id
+      if(data.id===this.state.downID){
+        id = -1
+      }
+        this.setState({
+          downID:id
+        })
+    }
+    rightSkip=(data)=>{
+      console.log(data.link)
+      this.props.navigation.push(data.link)
     }
     render() {
       const win = Dimensions.get('window').width;
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <StatusBar backgroundColor="#fff" barStyle="dark-content"/>
-            <View style={{height:40,borderBottomWidth:1,
-                          backgroundColor:'#fff',width:win,
-                          justifyContent:"center",alignItems:"center",
-                          borderBottomColor:'#f0f0f0'}}>
-                <Text>基础组件</Text>
-            </View>
+              <Header name='基础组件' />
             <ScrollView>
                 <View style={{...styles.title,width:win,color:'#fff'}}>
                   <AntDesign name = {'codesquareo'}     
                             size =  {56}    
                             color  = { '#ccc' } />
-                  <Text style={{marginTop:20,}}>React Native 提供了一些内置的组件</Text>
+                  <Text style={{marginTop:20,}}>React Native提供了一些内置的组件</Text>
                 </View>
                 <View style={styles.content}>
-                    {moules.map(item=>{
-                      return <View key={item.id} style={styles.contentList}>
-                            <Text>{item.msg}</Text>
-                            <AntDesign name = {'down'}     
-                                      size =  {16}    
-                                      color  = { '#777' } />
-                        </View>
+                    {MoulesList.map(item=>{
+                      return <View  style={styles.contentList} key={item.id}>
+                                 <TouchableHighlight underlayColor="#f0f0f0" style={styles.Touch} onPress={this.cutDown.bind(this,item)}>
+                                    <View style={{flexDirection:'row',justifyContent:'space-between',
+                                                  padding:20,flex:1,
+                                                  backgroundColor:this.state.downID===item.id?'#f0f0f0':'#fff'}}>
+                                      <Text>{item.msg}</Text>
+                                      <AntDesign name = {this.state.downID===item.id?'up':'down'}     
+                                              size =  {16}    
+                                              color  = { '#777' }/>
+                                    </View>
+                                </TouchableHighlight>
+                                {this.state.downID===item.id&&item.list.map(item=>{
+                                      return <TouchableHighlight underlayColor="#f0f0f0" key={item.id} onPress={this.rightSkip.bind(this,item)}>
+                                               <View style={{flexDirection:'row',justifyContent:'space-between',
+                                                          padding:20,flex:1,marginLeft:10,
+                                                          borderTopColor:'#f0f0f0',borderTopWidth:1}}>
+                                                  <Text>{item.msg}</Text>
+                                                  <AntDesign name = {'right'}     
+                                                          size =  {16}    
+                                                          color  = { '#777' } />
+                                                </View>
+                                            </TouchableHighlight>
+                                  })}
+                            </View>
                     })}
                 </View>
             </ScrollView>
@@ -81,14 +105,16 @@ const  styles = StyleSheet.create({
     content:{
       backgroundColor:"#f5f5f5"
     },
-    contentList:{
+    Touch:{
       flexDirection:'row',
-      justifyContent:'space-between',
+      justifyContent:'space-between'
+    },
+    contentList:{
+      flexDirection:'column',
       backgroundColor:'#fff',
       margin:10,
       marginBottom:5,
       marginTop:5,
-      padding:10
     }
 })
 

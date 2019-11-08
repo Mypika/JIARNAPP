@@ -4,20 +4,16 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 
-import Index from './src/tabs/index'
-import User from './src/tabs/user'
-import Login from './src/pages/login/login'
+
+// tab页
 import TabNavigator from './src/tabnav/tabnav'
 
-// class HomeScreen extends React.Component {
-//   render() {
-//     return (
-//       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//         <Text>Home Screen</Text>
-//       </View>
-//     );
-//   }
-// }
+//注册页面路由
+import Login from './src/pages/login/login'
+import Views from "./src/pages/indexpages/view"
+import Texts from './src/pages/indexpages/texts'
+import ScrollViews from "./src/pages/indexpages/ScrollView"
+import SectionList from "./src/pages/indexpages/SectionList"
 
 const AppNavigator = createStackNavigator({
   Main:{
@@ -28,7 +24,18 @@ const AppNavigator = createStackNavigator({
   },
   Login: {
     screen: Login,
-    
+  },
+  Views: {
+    screen: Views,
+  },  
+  ScrollViews:{
+    screen: ScrollViews
+  },
+  SectionList:{
+    screen: SectionList
+  },
+  Texts:{
+    screen: Texts
   },
  
 });
